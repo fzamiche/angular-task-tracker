@@ -59,6 +59,12 @@
       "text": "Meeting at Store",
       "day": "May 14th at 9:30pm",
       "reminder": true
+    },
+    {
+      "id": "eb31",
+      "text": "Rendez-vous dentiste",
+      "day": "Lundi 6 déc à 15h00",
+      "reminder": false
     }
   ]
 }
