@@ -1,0 +1,37 @@
+@startuml
+title Diagramme d'interaction pour l'ajout de tâches
+
+actor Utilisateur
+
+participant "ButtonComponent\n(button.component.ts)" as ButtonComponent
+participant "HeaderComponent\n(header.component.ts)" as HeaderComponent
+participant "AddTaskComponent\n(add-task.component.ts)" as AddTaskComponent
+participant "UiService\n(ui.service.ts)" as UiService
+
+' Interaction avec l'utilisateur
+Utilisateur -> ButtonComponent: Clique sur le bouton (click)
+
+' Logique dans le ButtonComponent
+ButtonComponent -> HeaderComponent: Emmet un event (btnClick)
+
+' Logique dans HeaderComponent
+HeaderComponent -> HeaderComponent: Appelle toggleAddTask()
+HeaderComponent -> UiService: Appelle toggleAddTask()
+
+' Gestion de l'état dans UiService
+UiService -> UiService: Inverse showAddTask
+UiService -> UiService: Émet la nouvelle valeur via Subject
+
+' Notification des abonnés (HeaderComponent et AddTaskComponent)
+UiService -> HeaderComponent: Notifie via onToggle() (Observable)
+UiService -> AddTaskComponent: Notifie via onToggle() (Observable)
+
+' Mise à jour dans HeaderComponent
+HeaderComponent -> HeaderComponent: Met à jour showAddTask
+HeaderComponent -> HeaderComponent: Angular met à jour le DOM
+HeaderComponent -> Utilisateur: Mise à jour du bouton (couleur & texte)
+
+' Mise à jour dans AddTaskComponent
+AddTaskComponent -> Utilisateur: Affiche ou masque le formulaire selon l'état de showAddTask
+
+@enduml
